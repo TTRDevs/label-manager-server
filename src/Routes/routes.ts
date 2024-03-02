@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { getMetabaseEmbedding } from '../Services/DashboardEmbedding';
 import { fetchDataFromService } from '../Services/DatabaseApiFetch';
-import { getClientCredentials, getSalesReport } from '../Services/BandCampController';
+import { getClientCredentials, getSalesReport } from '../Services/bandCampController';
 
 const router = express.Router();
 

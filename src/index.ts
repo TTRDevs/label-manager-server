@@ -1,8 +1,7 @@
-import { tokenAccess, startDate } from './Services/BandCampController';
 import express from 'express';
 import cors from 'cors';
 import router from './Routes/routes';
-import { getMyBands, getClientCredentials, getSalesReport } from './Services/BandCampController';
+import { getMyBands, getClientCredentials, getSalesReport } from './Services/bandCampController';
 import dotenv from 'dotenv'
 
 const app = express();
