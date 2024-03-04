@@ -12,12 +12,6 @@ interface BandcampTokenResponse {
     refresh_token: string;
 }
 
-interface SalesReport {
-    band_id: number;
-    start_time: string
-    // Add any other relevant properties here
-}
-
 let currentAccessToken: string | null = null;
 let currentExpiresAt: number | null = null;
 let currentRefreshToken: string | null = null;
@@ -35,10 +29,9 @@ export const getClientCredentials = async () => {
         const response = await api.getClientCredentials();
         console.log('Credentials fetched:', response);
         const tokenResponse = response as unknown as BandcampTokenResponse;
-        // Force expires_in to be 30 seconds for debugging purposes
         const expires_in = 30;
 
-        const expires_at = Date.now() + expires_in * 1000; // Set expiration to 30 seconds from now
+        const expires_at = Date.now() + expires_in * 1000;
 
         console.log("Access Token:", tokenResponse.access_token);
         console.log("Refresh Token:", tokenResponse.refresh_token);
@@ -63,14 +56,11 @@ export const refreshAccessToken = async () => {
 
         const response = await api.refreshToken(currentRefreshToken);
         const tokenResponse = response as unknown as BandcampTokenResponse;
-
-        // Force expires_in to be 30 seconds for debugging purposes
         const expires_in = 30;
-
         const expires_at = Date.now() + expires_in * 1000;
 
         console.log("New Access Token:", tokenResponse.access_token);
-        console.log('test accomplished'); // This will log every time the token is refreshed
+        console.log('test accomplished');
 
         currentAccessToken = tokenResponse.access_token;
         currentExpiresAt = expires_at;
@@ -105,11 +95,11 @@ export const getMyBands = async () => {
         console.log('Bands fetched:', bands);
         return bands;
     } catch (err) {
-        console.log('nao rolou o getmybands')
-    } 
+        console.log('Error Fetching Bands')
+    }
 }
-export const band = getMyBands
 
+export const band = getMyBands
 export const startDate = "2024-01-01"
 
 export const getSalesReport = async () => {
