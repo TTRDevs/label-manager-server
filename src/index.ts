@@ -14,7 +14,8 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:5173/*',
     "http://34.66.213.101:5432",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:3000/*"
   ],
   credentials: true,
 }));
@@ -26,15 +27,15 @@ app.listen(3000, '0.0.0.0', async () => {
   console.log('Server is up on port 3000');
 
 
-  try {
-    const clientCreds = await getClientCredentials();
-    const aTok = await clientCreds!.access_token
-    await getMyBands();
+  // try {
+  //   const clientCreds = await getClientCredentials();
+  //   const aTok = await clientCreds!.access_token
+  //   await getMyBands();
 
-    const salesReport = await getSalesReport();
-    console.log('Sales Report: ', salesReport)
-    return salesReport
-  } catch (error) {
-    console.error('An error occurred during initialization:', error);
-  }
+  //   const salesReport = await getSalesReport();
+  //   console.log('Sales Report: ', salesReport)
+  //   return salesReport
+  // } catch (error) {
+  //   console.error('An error occurred during initialization:', error);
+  // }
 });
