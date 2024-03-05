@@ -14,15 +14,17 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:5173/*',
     "http://34.66.213.101:5432",
-    "http://localhost:3001"
+    "http://localhost:3000"
   ],
   credentials: true,
 }));
 
 app.use('/api', router);
 
-const server = app.listen(3001, async () => {
-  console.log('Server started on port 3001');
+
+app.listen(3000, '0.0.0.0', async () => {
+  console.log('Server is up on port 3000');
+
 
   try {
     const clientCreds = await getClientCredentials();

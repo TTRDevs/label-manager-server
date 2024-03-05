@@ -13,5 +13,7 @@ router.get('/sales-report', getSalesReport);
 
 router.get('/bandcamp/credentials', getClientCredentials);
 
-
+router.get('/teste', () => {
+  console.log('teste 1')
+})
   export default router;

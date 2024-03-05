@@ -1,0 +1,14 @@
+version: '1'
+services:
+  node: 
+    build: .
+    command: "npm run dev"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+
+
