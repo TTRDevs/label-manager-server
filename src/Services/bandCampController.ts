@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import Bandcamp from "@nutriot/bandcamp-api";
+import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -15,18 +16,21 @@ interface BandcampTokenResponse {
 let currentAccessToken: string | null = null;
 let currentExpiresAt: number | null = null;
 let currentRefreshToken: string | null = null;
-export const mamaMeuOvo = ({ bands: { }, salesReport: { } }) => {
 
-}
 const api = new Bandcamp({
     id: process.env.BANDCAMP_CLIENT_ID as string,
     secret: process.env.BANDCAMP_CLIENT_SECRET as string,
 });
 
 export const getClientCredentials = async () => {
+    console.log(`Attempting to fetch client credentials at ${new Date().toISOString()}`);
     try {
         console.log('fetching bandcamp client credentials')
         const response = await api.getClientCredentials();
+        if (!response || !response.ok) {
+            console.error('getClientCredentials did not fetch a valid response:', response);
+            return null;
+          }
         console.log('Credentials fetched:', response);
         const tokenResponse = response as unknown as BandcampTokenResponse;
         const expires_in = 30;
@@ -45,10 +49,13 @@ export const getClientCredentials = async () => {
     } catch (error) {
         const message = (error instanceof Error) ? error.message : 'Unknown error';
         console.error('Error fetching client credentials:', message);
-    }
+        console.error(`Error occurred at ${new Date().toISOString()}:`, error);
+        return null;
+      }
 };
 
 export const refreshAccessToken = async () => {
+    console.log(`Attempting to refresh access token at ${new Date().toISOString()}`);
     try {
         if (!currentRefreshToken) {
             throw new Error('Refresh token not found.');
@@ -68,6 +75,7 @@ export const refreshAccessToken = async () => {
         return { access_token: tokenResponse.access_token, expires_at };
     } catch (error) {
         console.error('Error refreshing access token:', error);
+        console.error(`Error occurred at ${new Date().toISOString()}:`, error);
         throw new Error('Failed to refresh access token');
     }
 };
@@ -80,10 +88,14 @@ const isAccessTokenExpired = () => {
 };
 
 export const ensureValidAccessToken = async () => {
-    if (isAccessTokenExpired() && currentRefreshToken) {
-        await refreshAccessToken();
+  if (isAccessTokenExpired() && currentRefreshToken) {
+    const newCreds = await refreshAccessToken();
+    if (newCreds) {
+      currentAccessToken = newCreds.access_token;
+      currentExpiresAt = newCreds.expires_at;
     }
-    return currentAccessToken;
+  }
+  return currentAccessToken;
 };
 
 export const tokenAccess = currentAccessToken
@@ -100,7 +112,7 @@ export const getMyBands = async () => {
 }
 
 export const band = getMyBands
-export const startDate = "2024-01-01"
+export const startDate = "2024-03-05"
 
 export const getSalesReport = async () => {
     try {

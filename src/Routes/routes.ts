@@ -12,9 +12,5 @@ router.get('/data-service', fetchDataFromService);
 router.get('/sales-report', getSalesReport);
 
 router.get('/bandcamp/credentials', getClientCredentials);
-
-router.get('/teste', (req, res) => {
-  res.send(console.log('teste 1'))
   
-})
-  export default router;
+export default router;
