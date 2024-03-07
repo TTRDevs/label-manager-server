@@ -1,3 +1,4 @@
+
 export interface BandcampSalesReport {
     unique_bc_id: string;
     date: Date | null;
