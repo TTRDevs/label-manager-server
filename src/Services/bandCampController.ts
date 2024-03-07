@@ -113,7 +113,9 @@ export const getMyBands = async () => {
 }
 
 export const band = getMyBands
-export const startDate = "2024-03-07"
+
+export const startDate = "2015-01-01"
+
 
 export const getSalesReport = async (): Promise<BandcampSalesReport[]> => {
     try {
