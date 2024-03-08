@@ -20,6 +20,20 @@ services:
     ports:
       - "5432:5432"
 
+  metabase:
+    image: metabase/metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - label-manager-database
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: postgres
+      MB_DB_PASS: DataBase123@
+      MB_DB_HOST: label-manager-database
+
 volumes:
   postgres-data:
     driver: local

@@ -36,7 +36,7 @@ app.listen(3001, '0.0.0.0', async () => {
           await ensureValidAccessToken();
           await getMyBands();
           try {
-              const salesReport = await getSalesReport(3460825363, "2015-01-01", "2024-12-31");
+              const salesReport = await getSalesReport(3460825363, "2024-01-01", "2024-12-31");
               //Debug Log:
               //console.log('Retrieved sales report data:', salesReport);
               if (Array.isArray(salesReport)) {
