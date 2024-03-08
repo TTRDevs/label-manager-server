@@ -30,23 +30,28 @@ app.use('/api', router);
 app.listen(3001, '0.0.0.0', async () => {
   console.log('Server is up on port 3001');
   try {
-    const clientCreds = await getClientCredentials();
-    if (clientCreds) {
-      const accessToken = clientCreds.access_token;
-      await ensureValidAccessToken();
-      await getMyBands();
-      const salesReport = await getSalesReport();
-      console.log('Retrieved sales report data:', salesReport);
-      if (salesReport && Array.isArray(salesReport)) {
-        await fetchDataFromService(salesReport);
-        console.log('Sales Report processing complete.');
+      const clientCreds = await getClientCredentials();
+      if (clientCreds) {
+          const accessToken = clientCreds.access_token;
+          await ensureValidAccessToken();
+          await getMyBands();
+          try {
+              const salesReport = await getSalesReport(3460825363, "2015-01-01", "2024-12-31");
+              //Debug Log:
+              //console.log('Retrieved sales report data:', salesReport);
+              if (Array.isArray(salesReport)) {
+                  await fetchDataFromService(salesReport);
+                  console.log('Sales Report processing complete.');
+              } else {
+                  console.log('No sales report data was retrieved or the data is not in the expected format.');
+              }
+          } catch (error) {
+              console.error('Error retrieving sales report:', error);
+          }
       } else {
-        console.log('No sales report data was retrieved or the data is not in the expected format.');
+          console.log('No client credentials were retrieved.');
       }
-    } else {
-      console.log('No client credentials were retrieved.');
-    }
   } catch (error) {
-    console.error('An error occurred:', error);
+      console.error('An error occurred:', error);
   }
 });
