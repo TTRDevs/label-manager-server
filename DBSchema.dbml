@@ -1,0 +1,110 @@
+// TODO | NOTE ->  modify schema based on the available models, if necessary.
+
+Table Transactions {
+  transaction_id int [pk]
+  date varchar(30)
+  paid_to varchar(50)
+  item_name varchar(200)
+  artist varchar(200)
+  currency varchar(10)
+  item_price decimal(10)
+  quantity int
+  discount_code varchar(20)
+  sub_total decimal(10)
+  shipping decimal(10)
+  transaction_fee decimal(10)
+  fee_type varchar(20)
+  item_total decimal(10)
+  amount_you_received decimal(10)
+  bandcamp_transaction_id int
+  paypal_transaction_id int
+  net_amount decimal(10)
+  package varchar(20)
+  option varchar(50)
+  item_url varchar(200)
+  catalog_number varchar(50)
+  upc varchar(20)
+  isrc varchar(20)
+  ship_date varchar(30)
+  ship_notes text
+  seller_tax decimal(10)
+  marketplace_tax decimal(10)
+  buyer_id int [ref: > Buyers.buyer_id]
+  item_id int [ref: > Items.item_id]
+  payment_method_id int [ref: > PaymentMethods.payment_method_id]
+  address_id int [ref: > ShippingAddresses.address_id]
+  referrer_id int [ref: > Referrers.referrer_id]
+  geographical_item_id int [ref: > GeographicalItems.geographical_item_id]
+}
+
+Table Buyers {
+  buyer_id int [pk]
+  buyer_name varchar(100)
+  buyer_email varchar(100)
+  buyer_phone varchar(20)
+  buyer_note text
+}
+
+Table Items {
+  item_id int [pk]
+  item_name varchar(200)
+  artist varchar(200)
+  item_type varchar(20)
+  item_price decimal(10)
+  catalog_number varchar(50)
+  upc varchar(20)
+  isrc varchar(20)
+  inventory_id int [ref: > Inventory.inventory_id]
+}
+
+Table PaymentMethods {
+  payment_method_id int [pk]
+  payment_method_name varchar(100)
+}
+
+Table ShippingAddresses {
+  address_id int [pk]
+  ship_to_name varchar(100)
+  ship_to_street varchar(100)
+  ship_to_city varchar(50)
+  ship_to_state varchar(50)
+  ship_to_zip varchar(20)
+  geographical_item_id int [ref: > GeographicalItems.geographical_item_id]
+}
+
+Table Referrers {
+  referrer_id int [pk]
+  referrer_name varchar(100)
+  referrer_url varchar(200)
+}
+
+Table GeographicalItems {
+  geographical_item_id int [pk]
+  country varchar(50)
+  country_code varchar(10)
+  region_or_state varchar(50)
+  city varchar(50)
+}
+
+Table Inventory {
+  inventory_id int [pk]
+  item_id int [ref: > Items.item_id]
+  quantity_available int
+  quantity_reserved int
+}
+
+Table Orders {
+  order_id int [pk]
+  transaction_id int [ref: > Transactions.transaction_id]
+  order_date varchar(30)
+  order_status varchar(20)
+  quantity int
+}
+
+Table Sales {
+  sale_id int [pk]
+  transaction_id int [ref: > Transactions.transaction_id]
+  sale_date varchar(30)
+  sale_amount decimal(10)
+  quantity_sold int
+}
