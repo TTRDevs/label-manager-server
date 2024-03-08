@@ -1,4 +1,3 @@
-// Importing necessary modules and interfaces
 import { db } from './Database';
 import { BandcampSalesReport } from '../Models/BandCampSchema';
 
@@ -10,14 +9,11 @@ export const fetchDataFromService = async (salesReportData: BandcampSalesReport[
 
   for (const saleItem of salesReportData) {
     try {
-      // Log the values being inserted
       console.log('Inserting sale item:', saleItem);
 
-      // Since the `date` is already a Date object or null, there's no need to convert it
-      // Prepare the data for insertion directly using the properties from the saleItem
       const insertData = {
         unique_bc_id: saleItem.unique_bc_id,
-        date: saleItem.date, // Directly using Date or null as per the BandcampSalesReport interface
+        date: saleItem.date,
         paid_to: saleItem.paid_to,
         item_type: saleItem.item_type,
         item_name: saleItem.item_name,
@@ -67,13 +63,10 @@ export const fetchDataFromService = async (salesReportData: BandcampSalesReport[
         marketplace_tax: saleItem.marketplace_tax,
       };
 
-      // Perform the insert operation
       const result = await db.insertInto('sales_report').values(insertData).execute();
 
-      // Log the result of the insert operation
       console.log('Insert result:', result);
     } catch (error) {
-      // If an error occurs while inserting an item, log it and continue with the next item
       console.error('Error inserting sale item:', saleItem, error);
     }
   }

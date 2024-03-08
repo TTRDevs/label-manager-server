@@ -11,7 +11,6 @@ import {
 } from './Services/bandCampController';
 import dotenv from 'dotenv';
 import { fetchDataFromService } from './Services/DatabaseApiFetch';
-import { BandcampSalesReport } from './Models/BandCampSchema'; // Assuming the SaleItem type is here
 
 dotenv.config();
 const app = express();
@@ -33,14 +32,13 @@ app.listen(3001, '0.0.0.0', async () => {
   try {
     const clientCreds = await getClientCredentials();
     if (clientCreds) {
-      const accessToken = clientCreds.access_token; // Make sure to use the accessToken
-      await ensureValidAccessToken(); // Ensure we have a valid access token before making further calls
+      const accessToken = clientCreds.access_token;
+      await ensureValidAccessToken();
       await getMyBands();
-      const salesReport = await getSalesReport(); // This should return the structured data
+      const salesReport = await getSalesReport();
       console.log('Retrieved sales report data:', salesReport);
       if (salesReport && Array.isArray(salesReport)) {
-        // If the data is in the expected array format, process it further
-        await fetchDataFromService(salesReport); // Directly pass the array to the service function
+        await fetchDataFromService(salesReport);
         console.log('Sales Report processing complete.');
       } else {
         console.log('No sales report data was retrieved or the data is not in the expected format.');

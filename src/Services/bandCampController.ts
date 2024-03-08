@@ -184,20 +184,6 @@ export const getSalesReport = async (): Promise<BandcampSalesReport[]> => {
 
     } catch (error) {
         console.error('Error fetching sales report:', error);
-        throw error; // Rethrow the error to be handled by the caller
+        throw error;
     }
 };
-
-// export const getSalesReport = async () => {
-//     try {
-//         const salesReport = await api.getSalesReport(currentAccessToken as string, { band_id: 3460825363, start_time: startDate })
-//         // console.log('Sales Report:', salesReport);
-//         return { salesReport }
-//     } catch (error) {
-//         const message = (error instanceof Error) ? error.message : 'Unknown error';
-//         console.error('Error fetching Report:', message);
-//         return { message }
-//     }
-
-// }
-
