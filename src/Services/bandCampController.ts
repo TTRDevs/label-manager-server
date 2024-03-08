@@ -117,10 +117,19 @@ export const band = getMyBands
 export const startDate = "2015-01-01"
 
 
+// Define an interface for the expected structure of the error response
+interface ErrorResponse {
+    status?: number;
+    data?: any;
+}
+
 export const getSalesReport = async (): Promise<BandcampSalesReport[]> => {
     try {
         await ensureValidAccessToken();
         const report = await api.getSalesReport(currentAccessToken as string, { band_id: 3460825363, start_time: startDate });
+
+        // Debugging console log
+        console.log('Raw API response:', report);
 
         if (typeof report !== 'object' || report === null) {
             console.error('Sales report data is not in the expected object format.');
@@ -180,10 +189,55 @@ export const getSalesReport = async (): Promise<BandcampSalesReport[]> => {
         }));
 
         console.log('Transformed Sales Report:', salesReportArray);
-        return salesReportArray;
+                return salesReportArray;
 
-    } catch (error) {
-        console.error('Error fetching sales report:', error);
-        throw error;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error('Error message:', error.message); // ERROR: Some weird error with the Bandcamp API (Nutriot Lib), see error below
+            if ('response' in error) {
+                // Safely check if error.response exists and is of type ErrorResponse
+                const response = (error as any).response as ErrorResponse | undefined;
+                if (response) {
+                    console.error(`Error status code: ${response.status}`);
+                    console.error(`Error response body: ${response.data}`);
+                }
+            } else if ('request' in error) {
+                console.error('The request was made but no response was received', (error as any).request);
+            } else {
+                console.error('An error occurred that did not contain a response or request object:', error);
+            }
+        } else {
+            console.error('An unexpected error of unknown type occurred:', error);
+        }
+
+        // Re-throw the error for further handling.
+        throw error instanceof Error ? error : new Error('An unknown error occurred');
     }
 };
+
+
+// ERROR MESSAGE:
+
+// 2024-03-08 20:05:03 Error message: Unexpected token < in JSON at position 0
+// 2024-03-08 20:05:03 An error occurred that did not contain a response or request object: SyntaxError: Unexpected token < in JSON at position 0
+// 2024-03-08 20:05:03     at JSON.parse (<anonymous>)
+// 2024-03-08 20:05:03     at parseJSONFromBytes (node:internal/deps/undici/undici:4747:19)
+// 2024-03-08 20:05:03     at successSteps (node:internal/deps/undici/undici:4718:27)
+// 2024-03-08 20:05:03     at fullyReadBody (node:internal/deps/undici/undici:1433:9)
+// 2024-03-08 20:05:03     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+// 2024-03-08 20:05:03     at async specConsumeBody (node:internal/deps/undici/undici:4727:7)
+// 2024-03-08 20:05:03     at async post (/home/node/app/node_modules/@nutriot/bandcamp-api/lib/index.cjs:3:788)
+// 2024-03-08 20:05:03     at async p.getSalesReport (/home/node/app/node_modules/@nutriot/bandcamp-api/lib/index.cjs:3:1675) <------- # TODO: HERE!
+// 2024-03-08 20:05:03     at async getSalesReport (/home/node/app/src/Services/bandCampController.ts:130:24) 
+// 2024-03-08 20:05:03     at async Server.<anonymous> (/home/node/app/src/index.ts:38:27)
+// 2024-03-08 20:05:03 An error occurred: SyntaxError: Unexpected token < in JSON at position 0
+// 2024-03-08 20:05:03     at JSON.parse (<anonymous>)
+// 2024-03-08 20:05:03     at parseJSONFromBytes (node:internal/deps/undici/undici:4747:19)
+// 2024-03-08 20:05:03     at successSteps (node:internal/deps/undici/undici:4718:27)
+// 2024-03-08 20:05:03     at fullyReadBody (node:internal/deps/undici/undici:1433:9)
+// 2024-03-08 20:05:03     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+// 2024-03-08 20:05:03     at async specConsumeBody (node:internal/deps/undici/undici:4727:7)
+// 2024-03-08 20:05:03     at async post (/home/node/app/node_modules/@nutriot/bandcamp-api/lib/index.cjs:3:788)
+// 2024-03-08 20:05:03     at async p.getSalesReport (/home/node/app/node_modules/@nutriot/bandcamp-api/lib/index.cjs:3:1675) <------- # TODO: HERE!
+// 2024-03-08 20:05:03     at async getSalesReport (/home/node/app/src/Services/bandCampController.ts:130:24)
+// 2024-03-08 20:05:03     at async Server.<anonymous> (/home/node/app/src/index.ts:38:27)
