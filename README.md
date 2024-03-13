@@ -4,7 +4,7 @@
 
 This repository is part of a Label Manager solution, focusing on the back-end services. It works in conjunction with a front-end interface, stored in a separate repository, to provide a comprehensive solution for managing music label operations. A fully functional version of this solution will be deployed and accessible online; details and the link are provided below.
 
-- **Front-End Repository:** [Label Manager (Front-End)]([https://github.com/TTRDevs/label-manager])
+- **Front-End Repository:** [Label Manager (Front-End)](https://github.com/TTRDevs/label-manager)
 - **Online Version:** ~~[Visit the Deployed Application]~~ TBD
 
 ## Main Functionality
