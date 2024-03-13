@@ -1,4 +1,4 @@
-# Label Manager Back-End
+# Label Manager Server
 
 ## Overview
 
