@@ -33,7 +33,7 @@ export const getClientCredentials = async () => {
             return null;
         }
         // Debug Log:
-        console.log('Credentials fetched:');//, response);
+        console.log('Credentials fetched');//, response);
         const tokenResponse = response as unknown as BandcampTokenResponse;
         const expires_in = 30;
 
@@ -69,7 +69,7 @@ export const refreshAccessToken = async () => {
         const expires_at = Date.now() + expires_in * 1000;
 
         console.log("New Access Token:", tokenResponse.access_token);
-        console.log('test accomplished');
+        console.log('Test Accomplished!');
 
         currentAccessToken = tokenResponse.access_token;
         currentExpiresAt = expires_at;
@@ -107,7 +107,7 @@ export const getMyBands = async () => {
         console.log('Fetching my bands from Bandcamp...');
         const bands = await api.getMyBands(currentAccessToken as string);
         // Debug Log:
-        console.log('Bands fetched:'); //, bands);
+        console.log('Bands fetched'); //, bands);
         return bands;
     } catch (err) {
         console.log('Error Fetching Bands')
