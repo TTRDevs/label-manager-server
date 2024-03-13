@@ -25,7 +25,6 @@ To run this project using Docker, follow these steps:
 
 ```bash
 git clone https://github.com/TTRDevs/label-manager-server.git
-cd label-manager
 ```
 
 2. **Prepare the environment file:**
