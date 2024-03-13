@@ -1,16 +1,8 @@
-// index.ts
-
 import express from 'express';
 import cors from 'cors';
 import router from './Routes/routes';
-import {
-  ensureValidAccessToken,
-  getClientCredentials,
-  getMyBands,
-  getSalesReport
-} from './Services/bandCampController';
 import dotenv from 'dotenv';
-import { fetchDataFromService } from './Services/DatabaseApiFetch';
+import '/Services/scheduler';
 
 dotenv.config();
 const app = express();
