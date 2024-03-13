@@ -12,7 +12,6 @@ const pool = new Pool({
   user: 'postgres',
   host: 'label-manager-database',
   // host: 'localhost',
-  // host: 154.56.40.230,
   database: 'postgres',
   password: 'DataBase123@',
   port: 5432,
