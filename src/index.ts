@@ -17,7 +17,7 @@ app.use(cors({
     'http://localhost:3001',
     'http://localhost:3000',
   ],
-  credentials: true,
+  credentials: false,
 }));
 
 app.use('/api', router);
