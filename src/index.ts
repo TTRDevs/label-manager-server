@@ -9,10 +9,13 @@ const app = express();
 app.use(express.json());
 app.use(cors({
   origin: process.env.CORS_ORIGIN?.split(',') || [
-    'http://34.66.213.101:3000',
+    'http://154.56.40.230:3000',
+    'http://154.56.40.230:3001',
+    'http://154.56.40.230:5432',
     'http://localhost:5173',
-    'http://34.66.213.101:5432',
+    'http://localhost:5432',
     'http://localhost:3001',
+    'http://localhost:3000',
   ],
   credentials: true,
 }));
