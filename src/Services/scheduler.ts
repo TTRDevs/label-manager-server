@@ -1,10 +1,27 @@
 import cron from 'node-cron';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios from 'axios';
 
-// This schedule runs every 5 minutes
-cron.schedule('*/5 * * * *', () => {
-  console.log('Running the task every 5 minutes to fetch the sales report.');
-  axios.get('http://localhost:3001/sales-report/update-1d')
-    .then((response: AxiosResponse) => console.log('Sales report updated successfully:', response.data))
-    .catch((error: AxiosError) => console.error('Failed to update sales report:', error.message));
+const MAX_RETRIES = 5;
+const RETRY_DELAY_MS = 5000;
+
+const fetchSalesReport = async (attempt: number = 1): Promise<void> => {
+  try {
+    const response = await axios.get('http://localhost:3001/api/sales-report/update-1d');
+    console.log('Sales report updated successfully:', response.data);
+  } catch (error: any) {
+    console.error(`Attempt ${attempt}: Failed to update sales report -`, error.message);
+
+    if (attempt < MAX_RETRIES) {
+      console.log(`Retrying in ${RETRY_DELAY_MS / 1000} seconds...`);
+      setTimeout(() => fetchSalesReport(attempt + 1), RETRY_DELAY_MS);
+    } else {
+      console.error('Max retries reached. Giving up.');
+    }
+  }
+};
+
+// Scheduled task runs daily at 00:00
+cron.schedule('0 0 * * *', () => {
+  console.log('Running daily task to fetch the sales report.');
+  fetchSalesReport();
 });
