@@ -22,6 +22,9 @@ const fetchSalesReport = async (attempt: number = 1): Promise<void> => {
 
 // Scheduled task runs daily at 00:00
 cron.schedule('0 0 * * *', () => {
-  console.log('Running daily task to fetch the sales report.');
+  console.log('Running task to fetch the sales report at 01:50 Brazil time.');
   fetchSalesReport();
+}, {
+  scheduled: true,
+  timezone: "America/Sao_Paulo"
 });
