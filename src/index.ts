@@ -27,6 +27,8 @@ app.use(cors({
     'https://localhost:5432',
     'https://localhost:3001',
     'https://localhost:3000',
+    'https://metabase.recordlabelmanager.com',
+    'https://recordlabelmanager.com',
   ],
   credentials: false, // Typically, with cookies or auth you'd set this to true
 }));
