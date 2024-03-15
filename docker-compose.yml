@@ -1,17 +1,5 @@
 version: '3.8'
 services:
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx:/etc/nginx/conf.d:ro # Mount the Nginx configuration files
-      - /etc/letsencrypt:/etc/letsencrypt:ro # Mount the SSL certificates
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - metabase
-    restart: unless-stopped
-
   label-manager-server:
     build: .
     command: "npm run dev"
