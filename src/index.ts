@@ -60,6 +60,7 @@ app.use(cors({
     'https://localhost:3001',
     'https://localhost:3000',
     'https://metabase.recordlabelmanager.com',
+    'https://server.recordlabelmanager.com',
     'https://recordlabelmanager.com',
   ],
   credentials: true,
