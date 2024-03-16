@@ -6,8 +6,8 @@ services:
     working_dir: /home/node/app
     environment:
       NODE_ENV: development
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "3001:3001"
     depends_on:
       - label-manager-database
     volumes:
