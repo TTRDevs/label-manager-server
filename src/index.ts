@@ -64,7 +64,7 @@ app.use(cors({
     'https://recordlabelmanager.com',
     'https://recordlabelmanager.com/app/data-analysis',
   ],
-  credentials: false,
+  credentials: true,
 }));
 
 app.use('/api', router);
