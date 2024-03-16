@@ -50,52 +50,22 @@ const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
 app.use(express.json());
-// app.use(cors({
-//   origin: process.env.CORS_ORIGIN?.split(',') || [
-//     'https://154.56.40.230:3000',
-//     'https://154.56.40.230:3001',
-//     'https://154.56.40.230:5432',
-//     'https://localhost:5173',
-//     'https://localhost:5432',
-//     'https://localhost:3001',
-//     'https://localhost:3000',
-//     'https://metabase.recordlabelmanager.com',
-//     'https://server.recordlabelmanager.com',
-//     'https://recordlabelmanager.com',
-//     'https://recordlabelmanager.com/app/data-analysis',
-//   ],
-//   credentials: true,
-// }));
-
 app.use(cors({
-  origin: (origin, callback) => {
-    // Add all the domains that need to have access to your server
-    const allowedOrigins = [
-      'https://154.56.40.230:3000',
-      'https://154.56.40.230:3001',
-      'https://localhost:5173',
-      'https://localhost:3000',
-      'https://metabase.recordlabelmanager.com',
-      'https://server.recordlabelmanager.com',
-      'https://recordlabelmanager.com',
-      // ... any other domains or subdomains your client is using
-    ];
-
-    // Check if the origin is one of the allowed or not
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed for this origin'), false);
-    }
-  },
-  credentials: true, // Credentials/cookies are allowed
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed request methods
-  allowedHeaders: ['Content-Type', 'Authorization'] // Allowed custom headers
+  origin: process.env.CORS_ORIGIN?.split(',') || [
+    // 'https://154.56.40.230:3000',
+    // 'https://154.56.40.230:3001',
+    // 'https://154.56.40.230:5432',
+    // 'https://localhost:5173',
+    // 'https://localhost:5432',
+    // 'https://localhost:3001',
+    // 'https://localhost:3000',
+    'https://metabase.recordlabelmanager.com',
+    'https://server.recordlabelmanager.com',
+    'https://recordlabelmanager.com',
+    'https://recordlabelmanager.com/app/data-analysis',
+  ],
+  credentials: true,
 }));
-
-// Enable pre-flight requests for all routes
-app.options('*', cors());
-
 
 app.use('/api', router);
 
