@@ -1,10 +1,7 @@
-// routes.ts
-
 import express, { Request, Response } from 'express';
 import { getMetabaseEmbedding } from '../Services/DashboardEmbedding';
 import { fetchDataFromService } from '../Services/DatabaseApiFetch';
-import { getClientCredentials, getSalesReport, ensureValidAccessToken, getMyBands } from '../Services/bandCampController';
-import { db } from '../Services/Database';
+import { getClientCredentials, getSalesReport, ensureValidAccessToken } from '../Services/bandCampController';
 
 const router = express.Router();
 const bandId = Number(process.env.BAND_ID);
