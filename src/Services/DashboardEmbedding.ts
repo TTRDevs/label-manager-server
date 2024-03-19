@@ -16,7 +16,7 @@ export function getMetabaseEmbedding(req: Request, res: Response) {
             throw new Error('METABASE_SECRET_KEY is not defined in your environment.');
         }
         const token = jwt.sign(payload, process.env.METABASE_SECRET_KEY);
-        const iframeUrl = `${process.env.METABASE_SITE_URL}/embed/dashboard/${token}#bordered=false&titled=false`;
+        const iframeUrl = `${process.env.METABASE_SITE_URL}/embed/dashboard/${token}#bordered=false&titled=true`;
 
         res.json({ iframeUrl });
     } catch (error) {
