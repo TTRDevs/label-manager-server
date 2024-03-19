@@ -6,7 +6,7 @@ const RETRY_DELAY_MS = 5000;
 
 const fetchSalesReport = async (attempt: number = 1): Promise<void> => {
   try {
-    const response = await axios.get('/api/sales-report/update-1d');
+    const response = await axios.get('https://recordlabelmanager.com:3001/api/sales-report/update-1d');
     console.log('Sales report updated successfully:', response.data);
   } catch (error: any) {
     console.error(`Attempt ${attempt}: Failed to update sales report -`, error.message);
