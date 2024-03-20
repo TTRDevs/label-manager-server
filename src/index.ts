@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import router from './Routes/routes';
 import dotenv from 'dotenv';
-import http from 'http'; // Use the http module
+import http from 'http';
 import './Services/scheduler';
 
 dotenv.config();
@@ -32,15 +32,13 @@ app.get('/', (req, res) => {
   res.send('Hello, welcome to the Label Manager Server!');
 });
 
-// Create an HTTP server rather than HTTPS
 const httpServer = http.createServer(app);
 
-// The server should listen on all network interfaces
 httpServer.listen(3001, '0.0.0.0', () => {
   console.log('HTTP Server is up on port 3001');
 });
 
-
+//HTTPS CONFIGURATION:
 // import express from 'express';
 // import cors from 'cors';
 // import router from './Routes/routes';
