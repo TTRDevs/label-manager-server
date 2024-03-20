@@ -7,10 +7,11 @@ validateEnvVariables();
 
 export function getMetabaseEmbedding(req: Request, res: Response) {
     try {
+        const oneDayInSeconds = 24 * 60 * 60; // 24 hours * 60 minutes * 60 seconds
         const payload = {
             resource: { dashboard: 1 },
             params: {},
-            exp: Math.round(Date.now() / 1000) + (10 * 60),
+            exp: Math.round(Date.now() / 1000) + oneDayInSeconds, // Expire in 1 day
         };
         if (!process.env.METABASE_SECRET_KEY) {
             throw new Error('METABASE_SECRET_KEY is not defined in your environment.');
