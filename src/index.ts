@@ -14,34 +14,40 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',') || [
-    'https://154.56.40.230:3000',
-    'https://154.56.40.230:3001',
-    'https://154.56.40.230:5432',
-    'https://localhost:5173',
-    'https://localhost:5432',
-    'https://localhost:3001',
-    'https://localhost:3000',
-    'https://metabase.recordlabelmanager.com',
-    'https://server.recordlabelmanager.com',
-    'https://recordlabelmanager.com',
-    'https://recordlabelmanager.com/app/data-analysis',
-  ],
+  origin: /\.recordlabelmanager\.com$/,
   credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With', 
+    'Accept', 
+    'Accept-Language', 
+    'Accept-Encoding', 
+    'Connection', 
+    'Host', 
+    'Origin', 
+    'User-Agent', 
+    'Access-Control-Allow-Headers'
+  ]
 }));
 
-const pgSession = connectPgSimple(session);
+const PgSession = connectPgSimple(session);
 
 const sessionSecret = uuidv4();
 
 app.use(session({
-  store: new pgSession({
+  store: new PgSession({
     conString: `postgres://${process.env.POSTGRES_USER}:${encodeURIComponent(process.env.POSTGRES_PASSWORD!)}@label-manager-database:5432/${process.env.POSTGRES_DB}`
   }),
   secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false, httpOnly: true, sameSite: 'none' }
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'none'
+  }
 }));
 
 app.use('/api', router);
@@ -55,6 +61,7 @@ const httpServer = http.createServer(app);
 httpServer.listen(3001, '0.0.0.0', () => {
   console.log('HTTP Server is up on port 3001');
 });
+
 
 //HTTPS CONFIGURATION:
 // import express from 'express';
