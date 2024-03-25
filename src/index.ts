@@ -41,7 +41,7 @@ app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, httpOnly: true, sameSite: 'none' }
+  cookie: { secure: false, httpOnly: true, sameSite: 'none' }
 }));
 
 app.use('/api', router);
