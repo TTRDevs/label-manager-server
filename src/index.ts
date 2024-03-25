@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import http from 'http';
 import './Services/scheduler';
 import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
@@ -28,11 +30,18 @@ app.use(cors({
   credentials: true,
 }));
 
+const pgSession = connectPgSimple(session);
+
+const sessionSecret = uuidv4();
+
 app.use(session({
-  secret: 'yourSecretKey', // Use a long, random string here
+  store: new pgSession({
+    conString: `postgres://${process.env.POSTGRES_USER}:${encodeURIComponent(process.env.POSTGRES_PASSWORD!)}@label-manager-database:5432/${process.env.POSTGRES_DB}`
+  }),
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, httpOnly: true, sameSite: 'none' } // Adjust cookie settings based on your requirements
+  cookie: { secure: true, httpOnly: true, sameSite: 'none' }
 }));
 
 app.use('/api', router);
