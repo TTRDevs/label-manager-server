@@ -4,11 +4,13 @@ import router from './Routes/routes';
 import dotenv from 'dotenv';
 import http from 'http';
 import './Services/scheduler';
+import session from 'express-session';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
 app.use(cors({
   origin: process.env.CORS_ORIGIN?.split(',') || [
     'https://154.56.40.230:3000',
@@ -24,6 +26,13 @@ app.use(cors({
     'https://recordlabelmanager.com/app/data-analysis',
   ],
   credentials: true,
+}));
+
+app.use(session({
+  secret: 'yourSecretKey', // Use a long, random string here
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, httpOnly: true, sameSite: 'none' } // Adjust cookie settings based on your requirements
 }));
 
 app.use('/api', router);
