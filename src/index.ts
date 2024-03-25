@@ -15,21 +15,7 @@ app.use(express.json());
 
 app.use(cors({
   origin: /\.recordlabelmanager\.com$/,
-  credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
-    'X-Requested-With', 
-    'Accept', 
-    'Accept-Language', 
-    'Accept-Encoding', 
-    'Connection', 
-    'Host', 
-    'Origin', 
-    'User-Agent', 
-    'Access-Control-Allow-Headers'
-  ]
+  credentials: false
 }));
 
 const PgSession = connectPgSimple(session);
@@ -46,7 +32,7 @@ app.use(session({
   cookie: {
     secure: true,
     httpOnly: true,
-    sameSite: 'none'
+    sameSite: 'lax'
   }
 }));
 
