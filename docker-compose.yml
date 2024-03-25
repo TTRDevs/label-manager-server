@@ -12,6 +12,8 @@ services:
       - label-manager-database
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - app-network
 
   label-manager-database:
     image: postgres
@@ -25,7 +27,9 @@ services:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"     
+      - "5432:5432"
+    networks:
+      - app-network     
 
   metabase:
     image: metabase/metabase
@@ -42,6 +46,12 @@ services:
       MB_DB_USER: ${METABASE_DBUSER}
       MB_DB_PASS: ${METABASE_DBPASS}
       MB_DB_HOST: label-manager-database
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   postgres-data:
