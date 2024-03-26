@@ -3,7 +3,6 @@ import cors from 'cors';
 import router from './Routes/routes';
 import dotenv from 'dotenv';
 import http from 'http';
-import './Services/scheduler';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,39 +12,36 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Using a single domain for simplicity, update if needed
+const allowedOrigins = ['https://recordlabelmanager.com', 'https://www.recordlabelmanager.com', 'https://server.recordlabelmanager.com', 'https://metabase.recordlabelmanager.com'];
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',') || [
-    'https://154.56.40.230:3000',
-    'https://154.56.40.230:3001',
-    'https://154.56.40.230:5432',
-    'https://localhost:5173',
-    'https://localhost:5432',
-    'https://localhost:3001',
-    'https://localhost:3000',
-    'https://metabase.recordlabelmanager.com',
-    'https://server.recordlabelmanager.com',
-    'https://server.recordlabelmanager.com/api/metabase',
-    'https://recordlabelmanager.com',
-    'https://recordlabelmanager.com/app/data-analysis',
-  ],
-  credentials: false
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: false, // false since you don't have user authentication
 }));
 
-const PgSession = connectPgSimple(session);
+const pgSession = connectPgSimple(session);
 
-const sessionSecret = 'umasessionsecretamuitosecretomasnaocontemnada';
+// Generate a session secret once and keep it consistent across server restarts
+const sessionSecret = "b31c169f-b0eb-443f-a2bf-f4b87d0844eb";
 
 app.use(session({
-  store: new PgSession({
+  store: new pgSession({
     conString: `postgres://${process.env.POSTGRES_USER}:${encodeURIComponent(process.env.POSTGRES_PASSWORD!)}@label-manager-database:5432/${process.env.POSTGRES_DB}`
   }),
   secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true,
+    secure: true, // Should be true in production if using HTTPS
     httpOnly: true,
-    sameSite: 'lax'
+    sameSite: 'lax' // lax is appropriate if not strictly requiring cross-site access
   }
 }));
 
@@ -57,9 +53,11 @@ app.get('/', (req, res) => {
 
 const httpServer = http.createServer(app);
 
-httpServer.listen(3001, '0.0.0.0', () => {
-  console.log('HTTP Server is up on port 3001');
+const PORT = process.env.PORT || 3001;
+httpServer.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
+
 
 
 //HTTPS CONFIGURATION:
