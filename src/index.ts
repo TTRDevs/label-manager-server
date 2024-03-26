@@ -6,6 +6,7 @@ import http from 'http';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import { v4 as uuidv4 } from 'uuid';
+import './Services/scheduler';
 
 dotenv.config();
 
@@ -55,8 +56,6 @@ const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
 
 //HTTPS CONFIGURATION:
 // import express from 'express';
