@@ -33,7 +33,7 @@ app.use(cors({
 
 const PgSession = connectPgSimple(session);
 
-const sessionSecret = uuidv4();
+const sessionSecret = 'umasessionsecretamuitosecretomasnaocontemnada';
 
 app.use(session({
   store: new PgSession({
