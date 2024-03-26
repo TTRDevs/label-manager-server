@@ -27,7 +27,7 @@ app.use(cors({
 
 const pgSession = connectPgSimple(session);
 
-const sessionSecret = uuidv4();
+const sessionSecret = process.env.SESSION_SECRET || uuidv4();
 
 app.use(session({
   store: new pgSession({
