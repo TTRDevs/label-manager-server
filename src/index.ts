@@ -12,7 +12,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Using a single domain for simplicity, update if needed
 const allowedOrigins = ['https://recordlabelmanager.com', 'https://www.recordlabelmanager.com', 'https://server.recordlabelmanager.com', 'https://metabase.recordlabelmanager.com'];
 
 app.use(cors({
@@ -23,13 +22,12 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: false, // false since you don't have user authentication
+  credentials: false,
 }));
 
 const pgSession = connectPgSimple(session);
 
-// Generate a session secret once and keep it consistent across server restarts
-const sessionSecret = "b31c169f-b0eb-443f-a2bf-f4b87d0844eb";
+const sessionSecret = uuidv4();
 
 app.use(session({
   store: new pgSession({
@@ -39,9 +37,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true, // Should be true in production if using HTTPS
+    secure: true,
     httpOnly: true,
-    sameSite: 'lax' // lax is appropriate if not strictly requiring cross-site access
+    sameSite: 'lax'
   }
 }));
 
