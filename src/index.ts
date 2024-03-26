@@ -14,7 +14,20 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: /\.recordlabelmanager\.com$/,
+  origin: process.env.CORS_ORIGIN?.split(',') || [
+    'https://154.56.40.230:3000',
+    'https://154.56.40.230:3001',
+    'https://154.56.40.230:5432',
+    'https://localhost:5173',
+    'https://localhost:5432',
+    'https://localhost:3001',
+    'https://localhost:3000',
+    'https://metabase.recordlabelmanager.com',
+    'https://server.recordlabelmanager.com',
+    'https://server.recordlabelmanager.com/api/metabase',
+    'https://recordlabelmanager.com',
+    'https://recordlabelmanager.com/app/data-analysis',
+  ],
   credentials: false
 }));
 
