@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { getMetabaseEmbedding } from '../Services/DashboardEmbedding';
 import { fetchDataFromService } from '../Services/BandcampDatabaseInsert';
-import { getClientCredentials, getSalesReport, ensureValidAccessToken } from '../Services/BandcampController';
+import { getClientCredentials, getSalesReport, ensureValidAccessToken } from '../Services/BandcampApiControl';
 
 const router = express.Router();
 const bandId = Number(process.env.BAND_ID);
