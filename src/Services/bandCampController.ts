@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import Bandcamp from "@nutriot/bandcamp-api";
-import fetch from 'node-fetch';
-import { BandcampSalesReport } from '../Models/BandCampSchema';
+import { BandcampSalesReport } from '../Models/BandcampSchema';
 
 dotenv.config();
 

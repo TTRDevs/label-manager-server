@@ -50,6 +50,6 @@ export interface BandcampSalesReport {
     marketplace_tax: number | null;
 }
 
-export interface Database {
+export interface BandcampDatabase {
     sales_report: BandcampSalesReport;
 }
