@@ -1,7 +1,7 @@
 import fs from 'fs';
 import csvParser from 'csv-parser';
 import { labelworkxdb } from './DatabaseConfig';
-import { LabelworkxSalesReport } from '../Models/LabelworkxSchema';
+import { LabelworkxSalesReport } from '../Models/LabelworkxDbSchema';
 
 export const importCsvData = async (filePath: string): Promise<void> => {
     const results: LabelworkxSalesReport[] = [];

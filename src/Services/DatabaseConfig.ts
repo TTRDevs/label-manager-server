@@ -1,7 +1,7 @@
 import { Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
-import { BandcampSalesReport } from '../Models/BandcampSchema';
-import { LabelworkxSalesReport } from '../Models/LabelworkxSchema';
+import { BandcampSalesReport } from '../Models/BandcampDbSchema';
+import { LabelworkxSalesReport } from '../Models/LabelworkxDbSchema';
 
 interface BandcampDatabase {
   sales_report: BandcampSalesReport;

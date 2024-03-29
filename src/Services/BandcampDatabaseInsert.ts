@@ -1,5 +1,5 @@
 import { bandcampdb } from './DatabaseConfig';
-import { BandcampSalesReport } from '../Models/BandcampSchema';
+import { BandcampSalesReport } from '../Models/BandcampDbSchema';
 
 export const fetchDataFromService = async (salesReportData: BandcampSalesReport[]): Promise<void> => {
   if (salesReportData.length === 0) {
