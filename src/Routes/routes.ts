@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { getMetabaseEmbedding } from '../Services/DashboardEmbedding';
 import { fetchDataFromService } from '../Services/BandcampDatabaseInsert';
 import { getClientCredentials, getSalesReport, ensureValidAccessToken } from '../Services/BandcampApiControl';
-import { importAllExcelData } from '../Services/LabelworkxDatabaseInsert';
+import { importLabelworkxData } from '../Services/LabelworkxDatabaseInsert';
 import { importZebralutionData } from '../Services/ZebralutionDatabaseInsert';
 
 const router = express.Router();
@@ -145,9 +145,9 @@ router.get('/sales-report/bandcamp-update-max', async (req: Request, res: Respon
     }
 });
 
-router.get('/sales_report/fetch-labelworkx-data', async (req: Request, res: Response) => {
+router.get('/sales-report/fetch-labelworkx-data', async (req: Request, res: Response) => {
     try {
-        await importAllExcelData();
+        await importLabelworkxData();
         res.status(200).json({
             message: 'Labelworkx data imported successfully.'
         });
@@ -160,7 +160,7 @@ router.get('/sales_report/fetch-labelworkx-data', async (req: Request, res: Resp
     }
 });
 
-router.get('/sales_report/fetch-zebralution-data', async (req: Request, res: Response) => {
+router.get('/sales-report/fetch-zebralution-data', async (req: Request, res: Response) => {
     try {
         await importZebralutionData('zebralution_sales_report.xlsx');
         res.status(200).json({

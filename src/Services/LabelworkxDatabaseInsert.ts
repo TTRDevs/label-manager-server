@@ -5,7 +5,7 @@ import { labelworkxdb } from './DatabaseConfig';
 import { LabelworkxSalesReport } from '../Models/LabelworkxDbSchema';
 
 // Function to read all files and import data
-export const importAllExcelData = async (): Promise<void> => {
+export const importLabelworkxData = async (): Promise<void> => {
     const directoryPath = path.resolve(__dirname, '../Assets/Spreadsheets');
     
     // Read all files in the directory
