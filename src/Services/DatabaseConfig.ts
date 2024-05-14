@@ -2,6 +2,7 @@ import { Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 import { BandcampSalesReport } from '../Models/BandcampDbSchema';
 import { LabelworkxSalesReport } from '../Models/LabelworkxDbSchema';
+import { ZebralutionSalesReport } from '../Models/ZebralutionDbSchema';
 
 interface BandcampDatabase {
   sales_report: BandcampSalesReport;
@@ -9,6 +10,10 @@ interface BandcampDatabase {
 
 interface LabelworkxDatabase {
   labelworkx_sales_report: LabelworkxSalesReport;
+}
+
+interface ZebralutionDatabase {
+  zebralution_sales_report: ZebralutionSalesReport;
 }
 
 const pool = new Pool({
@@ -24,5 +29,9 @@ export const bandcampdb = new Kysely<BandcampDatabase>({
 });
 
 export const labelworkxdb = new Kysely<LabelworkxDatabase>({
+  dialect: new PostgresDialect({ pool }),
+});
+
+export const zebralutiondb = new Kysely<ZebralutionDatabase>({
   dialect: new PostgresDialect({ pool }),
 });
