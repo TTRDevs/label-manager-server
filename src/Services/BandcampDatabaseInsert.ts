@@ -63,7 +63,7 @@ export const fetchDataFromService = async (salesReportData: BandcampSalesReport[
         marketplace_tax: saleItem.marketplace_tax,
       };
 
-      const result = await bandcampdb.insertInto('sales_report').values(insertData).execute();
+      const result = await bandcampdb.insertInto('bandcamp_sales_report').values(insertData).execute();
 
       console.log('Insert result:', result);
     } catch (error) {

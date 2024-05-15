@@ -51,5 +51,5 @@ export interface BandcampSalesReport {
 }
 
 export interface BandcampDatabase {
-    sales_report: BandcampSalesReport;
+    bandcamp_sales_report: BandcampSalesReport;
 }

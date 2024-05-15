@@ -5,7 +5,7 @@ import { LabelworkxSalesReport } from '../Models/LabelworkxDbSchema';
 import { ZebralutionSalesReport } from '../Models/ZebralutionDbSchema';
 
 interface BandcampDatabase {
-  sales_report: BandcampSalesReport;
+  bandcamp_sales_report: BandcampSalesReport;
 }
 
 interface LabelworkxDatabase {
