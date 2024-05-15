@@ -62,9 +62,10 @@ router.get('/sales-report/bandcamp-update-1d', async (req: Request, res: Respons
 router.get('/sales-report/bandcamp-update-6mo', async (req: Request, res: Response) => {
     // Date range: from 6 months ago to today
     const sixMonthsAgo = new Date();
-    sixMonthsAgo.setDate(sixMonthsAgo.getMonth() - 6);
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 8);
     const startDate = sixMonthsAgo.toISOString().split('T')[0];
     const endDate = new Date().toISOString().split('T')[0];
+
 
     console.log(`Fetching sales report from ${startDate} to ${endDate}.`);
 
